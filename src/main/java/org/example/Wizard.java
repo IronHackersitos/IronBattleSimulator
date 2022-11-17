@@ -47,24 +47,25 @@ public class Wizard extends Character {
     }
 
     public String toString(){
-        return "Player: " + getName() + " |Type: Wizard |HP: " +
+        return "Player " + getName() + " Stats:\n|Type: Wizard |HP: " +
                 getHp() + " |Intelligence: " + getIntelligence() +" |Mana: " + getMana() +" |Alive: " + isAlive();
     }
     
     // method attack.
 
     public void attack(Character character) {
-
-        String[] attacks = {"Fireball", "Staff hit"}; //generamos de manera random el ataque que se utilizara
+        //randomly choosing which attack type
+        String[] attacks = {"Fireball", "Staff hit"}; 
         Random random = new Random();
         int R = random.nextInt(attacks.length);
         String attack = attacks[R];
-        System.out.println("Player used: " + attack);
+        System.out.println(super.getName() + " used " + attack);
 
         switch (attack) {
             case "Fireball":
                 if (this.mana < 5) {
                     attack = "Staff hit";
+                    System.out.println(super.getName() + " doesn't have enough mana and so it will use: " + attack);
                 }
                 else if (this.mana >= 5){
                     character.setHp(character.getHp() - this.intelligence);
@@ -80,11 +81,5 @@ public class Wizard extends Character {
                 this.mana++;
                 break;
         }
-        
     }
-    
-    // public String toCSV(){
-    //    return getName() + "," + getHp() + "," + getMana() + "," + getIntelligence() + "," + 1;
-    //}
-    
     }
