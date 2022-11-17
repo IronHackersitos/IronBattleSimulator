@@ -7,32 +7,35 @@ public class Main {
     public static void main(String[] args) {
         //Creating both characters
         List<Character> players = characterCreation();
-
+        System.out.println(players.toString());
         //Battle
-        int counter = 1;
-        while(players.get(0).getHp() > 0 && players.get(1).getHp() > 0 || (players.get(0).getHp() == 0 && players.get(1).getHp() == 0)){
+        int rounds = 1;
+        //while(players.get(0).getHp() > 0 && players.get(1).getHp() > 0 || (players.get(0).getHp() <= 0 && players.get(1).getHp() <= 0)){
+        while(players.get(0).isAlive() && players.get(1).isAlive() || (players.get(0).isAlive() == false) && (players.get(1).isAlive() == false)){
             //Regenerating the players if both entered with 0 and consequently there was a tie.
-            if( (players.get(0).getHp() == 0 && players.get(1).getHp() == 0 )){
+            //if( (players.get(0).getHp() <= 0 && players.get(1).getHp() <= 0 )){
+            if((players.get(0).isAlive() == false) && (players.get(1).isAlive() == false)){
                 System.out.println("Combat ended in tie. New combat is generated");
                 players = characterCreation();
-                counter = 1;
+                rounds = 1;
             }
             //Start of battle
-            System.out.println("Round" + counter);
+            System.out.println("Round" + rounds);
             players.get(0).attack(players.get(1));
             players.get(1).attack(players.get(0));
 
+            //Printing stats of each player
             int count = 0;
             while (count < 2) {
-
-                if (players.get(count) instanceof Wizard) {
+                System.out.println(players.get(count).toString());
+                /*if(players.get(count) instanceof Wizard)
                     System.out.println(players.get(count).getName() + "has the next stats:\n" + "Mana: " + players.get(count).getMana() + "\n" + "Intelligence: " + players.get(count).getIntelligence() + "\n" + "Health: " + players.get(count).super.getHp() + "\n");
                 } else if (players.get(count) instanceof Warrior) {
-                    System.out.println(players.get(count).getName() + "has the next stats:\n" + "Strength: " + players.get(count).getStrength() + "\n" + "Stamina: " + players.get(count).getStamina() + "\n" + "Health: " + players.get(count).super.getHp() + "\n");
-                }
+                    /*System.out.println(players.get(count).getName() + "has the next stats:\n" + "Strength: " + players.get(count).getStrength() + "\n" + "Stamina: " + players.get(count).getStamina() + "\n" + "Health: " + players.get(count).super.getHp() + "\n");
+                }*/
                 count++;
             }
-            counter++;
+            rounds++;
         }
 
         //Dictating winner
@@ -42,17 +45,18 @@ public class Main {
         } else if(players.get(1).getHp() > 0){
             System.out.println(players.get(1).getName() + " is the WINNER");
         }
+        
 
     }
 
     public static List characterCreation(){
         int i = 0;
         List<Character> players = new ArrayList<>();
-
+        Scanner input = new Scanner(System.in);
+        System.out.println("he creado el scanner");
         while(i < 2){
             //Creating the input menu
-            Scanner input = new Scanner(System.in);
-
+            System.out.println("he entrado en el bucle");
             if(i == 0) {
                 System.out.println("Choose your first fighter: Wizard or Warrior?");
             }else System.out.println("Choose your second fighter: Wizard or Warrior?");
@@ -68,7 +72,9 @@ public class Main {
             //Creating the characters according to what was chosen above
             switch (playerType){
                 case "Wizard":
+                    System.out.println("enrtro a crear player wizard");
                     if(i == 0 ) {
+                        System.out.println("enrtro a crear player wizard");
                         Wizard wizard = new Wizard(playerName);
                         players.add(wizard);
                     }else {
@@ -77,20 +83,16 @@ public class Main {
                     }
                     break;
                 case "Warrior":
+                    System.out.println("enrtro a crear player warrior");
                     if(i == 0) {
                         Warrior warrior = new Warrior(playerName);
                         players.add(warrior);
 
-                    }else if(i == 1 && wizard){
-                        Warrior warrior = new Warrior(playerName);
-                        players.add(warrior);
-                    }else {
+                    } else {
                         Warrior warrior1 = new Warrior(playerName);
                         players.add(warrior1);}
                     break;
             }
-
-            input.close();
             i++;
         }
         return players;

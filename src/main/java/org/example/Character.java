@@ -37,13 +37,13 @@ public abstract class Character {
     }
 
     public void setHp(int hp) {
+        if(hp <= 0) setAlive(false);
         this.hp = hp;
     }
 
-    public void setAlive(boolean alive) {
-        isAlive = alive;
+    public void setAlive(boolean isAlive) {
+        this.isAlive = isAlive;
     }
-
 
     //getters
 

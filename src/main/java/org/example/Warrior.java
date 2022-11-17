@@ -41,7 +41,13 @@ public class Warrior extends Character {
         this.strength = strength;
     }
 
-    public abstract void attack (Character character){
+    @Override
+    public String toString() {
+        return "Player: " + getName() + " |Type: Warrior |HP: " +
+                getHp() + " |Strength: " + getStrength() +" |Stamina: " + getStamina() +" |Alive: " + isAlive();
+    }
+
+    public void attack (Character character){
         String [] attacks = {"Heavy Attack", "Weak Attack"}; //generamos de manera random el ataque que se utilizara
         Random random = new Random();
         int R = random.nextInt(attacks.length);
@@ -51,20 +57,20 @@ public class Warrior extends Character {
             case "Heavy Attack":
                 if (this.stamina<5){
                     attack = "Weak Attack";
+                }
+                else if(this.stamina>=5){
+                    character.setHp(character.getHp() - this.strength);
+                    this.stamina -= 5;
                     break;
                 }
-                super.setHp(character) = super.getHp(character) - this.strength;
-                this.stamina -= 5;
-                break;
             case "Weak Attack":
-                if (this.stamina<=0){
-                    stamina+=2;
+                if (this.stamina <= 0){
+                    stamina += 2;
                     break;
                 }
-                super.setHp(character) = super.getHp(character) - this.strength/2;
+                character.setHp(character.getHp() - this.strength/2);
                 this.stamina++;
                 break;
-            default:
         }
     }
 }
