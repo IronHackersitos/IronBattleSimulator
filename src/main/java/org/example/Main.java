@@ -64,7 +64,14 @@ public class Main {
             int playerType = -1;
             while(playerType < 1 || playerType > 2){
                 System.out.println("Enter 1 for WIZARD or enter 2 for WARRIOR");
-                playerType = input.nextInt();
+                try {
+                    playerType = Integer.valueOf(input.nextLine());
+                }catch (NumberFormatException e){
+                    playerType = -1;
+                }
+                if(playerType < 1 || playerType > 2){
+                    System.err.println("Enter a number between 1 and 2");
+                }
             }
 
             //Creating the characters according to what was chosen above
